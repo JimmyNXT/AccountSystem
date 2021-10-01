@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "MEMBER_GOAL", schema = "")
+@Table(name = "MEMBER_GOAL", schema = "HR")
 public class MemberGoal implements Serializable {
 
     private Long ID;
@@ -24,7 +24,7 @@ public class MemberGoal implements Serializable {
     }
 
     @Id
-    @SequenceGenerator(name = "", sequenceName = "", allocationSize = 1)
+    @SequenceGenerator(name = "MEMBER_GOAL_SEQ", sequenceName = "HR.MEMBER_GOAL_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "")
     @Column(name = "ID")
     public Long getID() {

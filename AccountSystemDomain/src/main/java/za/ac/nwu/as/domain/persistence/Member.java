@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "MEMBER", schema = "")
+@Table(name = "MEMBER", schema = "HR")
 public class Member implements Serializable {
 
     private static final long serialVersionUID = -4651200715713084503L;
@@ -29,7 +29,7 @@ public class Member implements Serializable {
     }
 
     @Id
-    @SequenceGenerator(name = "", sequenceName = "", allocationSize = 1)
+    @SequenceGenerator(name = "MEMBER_SEQ", sequenceName = "HR.MEMBER_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "")
     @Column(name = "ID")
     public Long getID() {
