@@ -7,12 +7,12 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "ACCOUNT_TYPE", schema = "HR")
+@Table(name = "account_type")
 public class AccountType  implements Serializable {
 
     private static final long serialVersionUID = 3681456844239263069L;
 
-    private long id;
+    private Integer id;
     private String mnemonic;
     private String name;
     private LocalDate creationDate;
@@ -22,7 +22,7 @@ public class AccountType  implements Serializable {
     public AccountType() {
     }
 
-    public AccountType(long id, String mnemonic, String name, LocalDate creationDate) {
+    public AccountType(Integer id, String mnemonic, String name, LocalDate creationDate) {
         this.id = id;
         this.mnemonic = mnemonic;
         this.name = name;
@@ -36,10 +36,9 @@ public class AccountType  implements Serializable {
     }
 
     @Id
-    @SequenceGenerator(name = "ACCOUNT_TYPE_SEQ", sequenceName = "HR.ACCOUNT_TYPE_SEQ", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "ID")
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -68,7 +67,7 @@ public class AccountType  implements Serializable {
         return memberGoals;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -86,6 +85,10 @@ public class AccountType  implements Serializable {
 
     public void setAccountTransactions(Set<AccountTransaction> accountTransactions) {
         this.accountTransactions = accountTransactions;
+    }
+
+    public void setMemberGoals(Set<MemberGoal> memberGoals) {
+        this.memberGoals = memberGoals;
     }
 
     @Override

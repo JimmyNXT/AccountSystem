@@ -5,35 +5,34 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "MEMBER_GOAL", schema = "HR")
+@Table(name = "member_goal")
 public class MemberGoal implements Serializable {
 
-    private Long ID;
-    private Long ggoal;
+    private Integer ID;
+    private Long goal;
     private Member member;
     private AccountType accountType;
 
     public MemberGoal() {
     }
 
-    public MemberGoal(Long ID, Long ggoal, Member member, AccountType accountType) {
+    public MemberGoal(Integer ID, Long goal, Member member, AccountType accountType) {
         this.ID = ID;
-        this.ggoal = ggoal;
+        this.goal = goal;
         this.member = member;
         this.accountType = accountType;
     }
 
     @Id
-    @SequenceGenerator(name = "MEMBER_GOAL_SEQ", sequenceName = "HR.MEMBER_GOAL_SEQ", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "ID")
-    public Long getID() {
+    public Integer getID() {
         return ID;
     }
 
     @Column(name = "GOAL")
-    public Long getGgoal() {
-        return ggoal;
+    public Long getGoal() {
+        return goal;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -48,12 +47,12 @@ public class MemberGoal implements Serializable {
         return accountType;
     }
 
-    public void setID(Long ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 
-    public void setGgoal(Long ggoal) {
-        this.ggoal = ggoal;
+    public void setGoal(Long goal) {
+        this.goal = goal;
     }
 
     public void setMember(Member member) {
@@ -69,19 +68,19 @@ public class MemberGoal implements Serializable {
         if (this == o) return true;
         if (!(o instanceof MemberGoal)) return false;
         MemberGoal that = (MemberGoal) o;
-        return Objects.equals(ID, that.ID) && Objects.equals(ggoal, that.ggoal) && Objects.equals(member, that.member) && Objects.equals(accountType, that.accountType);
+        return Objects.equals(ID, that.ID) && Objects.equals(goal, that.goal) && Objects.equals(member, that.member) && Objects.equals(accountType, that.accountType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID, ggoal, member, accountType);
+        return Objects.hash(ID, goal, member, accountType);
     }
 
     @Override
     public String toString() {
         return "MemberGoal{" +
                 "ID=" + ID +
-                ", ggoal=" + ggoal +
+                ", ggoal=" + goal +
                 ", member=" + member +
                 ", accountType=" + accountType +
                 '}';

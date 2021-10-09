@@ -72,6 +72,14 @@ public class AccountTypeDTO implements Serializable {
         return creationDate;
     }
 
+    public void setMnemonic(String mnemonic) {
+        this.mnemonic = mnemonic;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }

@@ -6,12 +6,12 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "ACCOUNT_TRANSACTION", schema = "HR")
+@Table(name = "account_transaction")
 public class AccountTransaction implements Serializable {
 
     private static final long serialVersionUID = -3644932884292748523L;
 
-    private Long ID;
+    private Integer ID;
     private AccountType accountType;
     private Member member;
     private Long amount;
@@ -20,7 +20,7 @@ public class AccountTransaction implements Serializable {
     public AccountTransaction() {
     }
 
-    public AccountTransaction(Long ID, AccountType accountType, Member member, Long amount, LocalDate transactionDate) {
+    public AccountTransaction(Integer ID, AccountType accountType, Member member, Long amount, LocalDate transactionDate) {
         this.ID = ID;
         this.accountType = accountType;
         this.member = member;
@@ -29,14 +29,13 @@ public class AccountTransaction implements Serializable {
     }
 
     @Id
-    @SequenceGenerator(name = "ACCOUNT_TRANSACTION_SEQ", sequenceName = "HR.ACCOUNT_TRANSACTION_SEQ", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "ID")
-    public Long getID() {
+    public Integer getID() {
         return ID;
     }
 
-    public void setID(Long ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 

@@ -6,12 +6,12 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "MEMBER", schema = "HR")
+@Table(name = "member")
 public class Member implements Serializable {
 
     private static final long serialVersionUID = -4651200715713084503L;
 
-    private Long ID;
+    private Integer ID;
     private String firstName;
     private String lastName;
     private Set<MemberGoal> memberGoals;
@@ -20,7 +20,7 @@ public class Member implements Serializable {
     public Member() {
     }
 
-    public Member(Long ID, String firstName, String lastName, Set<MemberGoal> memberGoals, Set<AccountTransaction> accountTransactions) {
+    public Member(Integer ID, String firstName, String lastName, Set<MemberGoal> memberGoals, Set<AccountTransaction> accountTransactions) {
         this.ID = ID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -28,11 +28,18 @@ public class Member implements Serializable {
         this.accountTransactions = accountTransactions;
     }
 
+
+    public Member(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.memberGoals = memberGoals;
+        this.accountTransactions = accountTransactions;
+    }
+
     @Id
-    @SequenceGenerator(name = "MEMBER_SEQ", sequenceName = "HR.MEMBER_SEQ", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "ID")
-    public Long getID() {
+    public Integer getID() {
         return ID;
     }
 
@@ -56,7 +63,7 @@ public class Member implements Serializable {
         return accountTransactions;
     }
 
-    public void setID(Long ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 

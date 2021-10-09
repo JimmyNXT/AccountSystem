@@ -1,5 +1,8 @@
 package za.ac.nwu.as.translator.impl;
 
+import javafx.util.converter.LocalDateStringConverter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import za.ac.nwu.as.domain.dto.AccountTypeDTO;
 import za.ac.nwu.as.domain.persistence.AccountType;
 import za.ac.nwu.as.repository.persistence.AccountTypeRepository;
@@ -7,9 +10,12 @@ import za.ac.nwu.as.translator.AccountTypeTranslator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
+@Component
 public class AccountTypeTranslationImpl implements AccountTypeTranslator {
 
+    @Autowired
     private AccountTypeRepository accountTypeRepository;
 
     public AccountTypeTranslationImpl() {

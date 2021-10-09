@@ -6,11 +6,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import za.ac.nwu.as.domain.dto.AccountTypeDTO;
-import za.ac.nwu.as.domain.persistence.AccountType;
 import za.ac.nwu.as.domain.service.GeneralResponse;
 import za.ac.nwu.as.logic.flow.CreateAccountTypeFlow;
 import za.ac.nwu.as.logic.flow.FetchAccountTypeFlow;
@@ -19,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("account-type")
+@ComponentScan(value = "za.ac.nwu.as.logic.flow")
 public class AccountTypeController {
 
     private FetchAccountTypeFlow fetchAccountTypeFlow;
@@ -26,7 +27,7 @@ public class AccountTypeController {
 
     @Autowired
     public AccountTypeController(FetchAccountTypeFlow fetchAccountTypeFlow,
-                                 @Qualifier("createAccountTypeFlowName") CreateAccountTypeFlow createAccountTypeFlow){
+                                 /*@Qualifier("createAccountTypeFlowName")*/ CreateAccountTypeFlow createAccountTypeFlow){
         this.fetchAccountTypeFlow = fetchAccountTypeFlow;
         this.createAccountTypeFlow = createAccountTypeFlow;
     }
