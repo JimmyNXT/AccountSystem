@@ -9,8 +9,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import za.ac.nwu.as.domain.ResponseObjects.ErrorMessage;
 import za.ac.nwu.as.domain.dto.MemberDTO;
+import za.ac.nwu.as.domain.exception.DatabaseReadException;
+import za.ac.nwu.as.domain.service.ErrorResponse;
 import za.ac.nwu.as.domain.service.GeneralResponse;
+import za.ac.nwu.as.domain.service.MemberResponse;
 import za.ac.nwu.as.logic.flow.CreateMemberFlow;
 import za.ac.nwu.as.logic.flow.FetchMemberFlow;
 
@@ -33,15 +37,19 @@ public class MemberController {
     @GetMapping("/all")
     @ApiOperation(value = "Gets all the saved members.", notes = "Returns a list of members")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Members returned", response = GeneralResponse.class),
-            @ApiResponse(code = 400, message = "Bad request", response = GeneralResponse.class),
-            @ApiResponse(code = 404, message = "Not found", response = GeneralResponse.class),
-            @ApiResponse(code = 500, message = "Internal server error", response = GeneralResponse.class)
+            @ApiResponse(code = 200, message = "Members returned", response = MemberResponse.class),
+            @ApiResponse(code = 500, message = "Internal server error", response = ErrorResponse.class)
     })
-    public ResponseEntity<GeneralResponse<List<MemberDTO>>> getAll(){
-        List<MemberDTO> members = fetchMemberFlow.getAllMembers();
-        GeneralResponse<List<MemberDTO>> response = new GeneralResponse<>(true, members);
-        return new ResponseEntity<GeneralResponse<List<MemberDTO>>>(response, HttpStatus.OK);
+    public ResponseEntity getAll(){
+        try {
+            List<MemberDTO> members = fetchMemberFlow.getAllMembers();
+            MemberResponse response = new MemberResponse(members);
+            return new ResponseEntity<MemberResponse>(response, HttpStatus.OK);
+        }catch (DatabaseReadException e)
+        {
+            ErrorResponse response = new ErrorResponse(new ErrorMessage(e.getMessage()));
+            return  new ResponseEntity<ErrorResponse>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("")

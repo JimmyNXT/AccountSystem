@@ -11,6 +11,8 @@ import java.util.Objects;
 @ApiModel(value = "AccountTransaction", description = "A Data Transfer Object that represents the Account transaction.")
 public class AccountTransactionDTO implements Serializable {
 
+    private static final long serialVersionUID = -9166740859129560710L;
+    
     private AccountTypeDTO accountType;
     private Long amount;
     private LocalDate transactionDate;

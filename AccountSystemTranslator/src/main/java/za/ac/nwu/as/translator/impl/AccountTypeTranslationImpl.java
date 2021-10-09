@@ -4,6 +4,8 @@ import javafx.util.converter.LocalDateStringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import za.ac.nwu.as.domain.dto.AccountTypeDTO;
+import za.ac.nwu.as.domain.exception.DatabaseReadException;
+import za.ac.nwu.as.domain.exception.DatabaseWriteException;
 import za.ac.nwu.as.domain.persistence.AccountType;
 import za.ac.nwu.as.repository.persistence.AccountTypeRepository;
 import za.ac.nwu.as.translator.AccountTypeTranslator;
@@ -41,7 +43,7 @@ public class AccountTypeTranslationImpl implements AccountTypeTranslator {
                 accountTypeDTOs.add(new AccountTypeDTO(accountType));
             }
         }catch (Exception e){
-            throw new RuntimeException("Unable to read from Database",e);
+            throw new DatabaseReadException("Unable to read from Database");
         }
         return accountTypeDTOs;
     }
@@ -52,7 +54,7 @@ public class AccountTypeTranslationImpl implements AccountTypeTranslator {
             AccountType accountType = accountTypeRepository.save(accountTypeDTO.getAccountType());
             return new AccountTypeDTO(accountType);
         }catch (Exception e){
-            throw new RuntimeException("Unable to save to the DB", e);
+            throw new DatabaseWriteException("Unable to save to the DB");
         }
     }
 }
