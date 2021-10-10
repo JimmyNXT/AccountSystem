@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +25,7 @@ public class AccountTypeController {
     private CreateAccountTypeFlow createAccountTypeFlow;
 
     @Autowired
-    public AccountTypeController(FetchAccountTypeFlow fetchAccountTypeFlow,
-                                 /*@Qualifier("createAccountTypeFlowName")*/ CreateAccountTypeFlow createAccountTypeFlow){
+    public AccountTypeController(FetchAccountTypeFlow fetchAccountTypeFlow, CreateAccountTypeFlow createAccountTypeFlow){
         this.fetchAccountTypeFlow = fetchAccountTypeFlow;
         this.createAccountTypeFlow = createAccountTypeFlow;
     }

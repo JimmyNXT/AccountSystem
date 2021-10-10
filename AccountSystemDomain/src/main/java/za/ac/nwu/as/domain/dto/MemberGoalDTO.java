@@ -1,5 +1,6 @@
 package za.ac.nwu.as.domain.dto;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import za.ac.nwu.as.domain.persistence.AccountType;
 import za.ac.nwu.as.domain.persistence.Member;
@@ -7,6 +8,7 @@ import za.ac.nwu.as.domain.persistence.MemberGoal;
 
 import java.io.Serializable;
 
+@ApiModel(value = "MemberGoal", description = "A Data Transfer Object that represents the Member Goal for an Account type.")
 public class MemberGoalDTO implements Serializable {
 
     private static final long serialVersionUID = 5762831065901000768L;

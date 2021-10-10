@@ -9,24 +9,24 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @ApiModel(value = "AccountTransaction", description = "A Data Transfer Object that represents the Account transaction.")
-public class AccountTransactionDTO implements Serializable {
+public class AccountTransactionDTOold implements Serializable {
 
     private static final long serialVersionUID = -9166740859129560710L;
-    
+
     private AccountTypeDTO accountType;
     private Long amount;
     private LocalDate transactionDate;
 
-    public AccountTransactionDTO() {
+    public AccountTransactionDTOold() {
     }
 
-    public AccountTransactionDTO(AccountTypeDTO accountType, Long amount, LocalDate transactionDate) {
+    public AccountTransactionDTOold(AccountTypeDTO accountType, Long amount, LocalDate transactionDate) {
         this.accountType = accountType;
         this.amount = amount;
         this.transactionDate = transactionDate;
     }
 
-    public AccountTransactionDTO(AccountTransaction accountTransaction) {
+    public AccountTransactionDTOold(AccountTransaction accountTransaction) {
         this.accountType = new AccountTypeDTO(accountTransaction.getAccountType());
         this.amount = accountTransaction.getAmount();
         this.transactionDate = accountTransaction.getTransactionDate();
@@ -84,8 +84,8 @@ public class AccountTransactionDTO implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AccountTransactionDTO)) return false;
-        AccountTransactionDTO that = (AccountTransactionDTO) o;
+        if (!(o instanceof AccountTransactionDTOold)) return false;
+        AccountTransactionDTOold that = (AccountTransactionDTOold) o;
         return Objects.equals(accountType, that.accountType) && Objects.equals(amount, that.amount) && Objects.equals(transactionDate, that.transactionDate);
     }
 
