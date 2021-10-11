@@ -22,8 +22,8 @@ public class CreateTransactionFlowImpl implements CreateTransactionFlow {
     }
 
     @Override
-    public AccountTransactionDTO create(Integer memberID, String accountTypeMnemonic, Long amount) {
+    public AccountTransactionDTO create(AccountTransactionDTO accountTransaction) {
 
-        return accountTransactionTranslator.create(new AccountTransactionDTO(memberID, accountTypeMnemonic, amount));
+        return accountTransactionTranslator.create(accountTransaction);
     }
 }

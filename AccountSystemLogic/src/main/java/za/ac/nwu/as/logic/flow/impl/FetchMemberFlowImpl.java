@@ -3,6 +3,7 @@ package za.ac.nwu.as.logic.flow.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
+import za.ac.nwu.as.domain.dto.AccountBalanceDTO;
 import za.ac.nwu.as.domain.dto.MemberDTO;
 import za.ac.nwu.as.logic.flow.FetchMemberFlow;
 import za.ac.nwu.as.translator.MemberTranslator;
@@ -25,5 +26,10 @@ public class FetchMemberFlowImpl implements FetchMemberFlow {
     @Override
     public List<MemberDTO> getAllMembers() {
         return memberTranslator.getAllMembers();
+    }
+
+    @Override
+    public List<AccountBalanceDTO> getMemberBalances(Integer memberID) {
+        return memberTranslator.getMemberBalances(memberID);
     }
 }

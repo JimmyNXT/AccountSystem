@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
@@ -41,16 +42,8 @@ public class TransactionController {
             @ApiParam(
                     value = "Request body to create new transaction.",
                     required = true)
-            @RequestBody Integer memberID,
-            @ApiParam(
-                    value = "Request body to create new transaction.",
-                    required = true)
-            @RequestBody String AccountTypeMnemonic,
-            @ApiParam(
-                    value = "Request body to create new transaction.",
-                    required = true)
-            @RequestBody Long amount){
-        AccountTransactionDTO accountTransactionDTOResponse = createTransactionFlow.create(memberID, AccountTypeMnemonic, amount);
+            @RequestBody AccountTransactionDTO accountTransaction){
+        AccountTransactionDTO accountTransactionDTOResponse = createTransactionFlow.create(accountTransaction);
         GeneralResponse<AccountTransactionDTO> response = new GeneralResponse<AccountTransactionDTO>(true, accountTransactionDTOResponse);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

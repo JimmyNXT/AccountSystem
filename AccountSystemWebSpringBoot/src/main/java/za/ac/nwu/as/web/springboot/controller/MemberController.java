@@ -1,15 +1,14 @@
 package za.ac.nwu.as.web.springboot.controller;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import za.ac.nwu.as.domain.ResponseObjects.ErrorMessage;
+import za.ac.nwu.as.domain.dto.AccountBalanceDTO;
 import za.ac.nwu.as.domain.dto.MemberDTO;
 import za.ac.nwu.as.domain.exception.DatabaseReadException;
 import za.ac.nwu.as.domain.service.ErrorResponse;
@@ -67,5 +66,26 @@ public class MemberController {
         MemberDTO memberResponse = createMemberFlow.create(member);
         GeneralResponse<MemberDTO> response = new GeneralResponse<MemberDTO>(true, memberResponse);
         return new ResponseEntity<>(response,HttpStatus.CREATED);
+    }
+
+    @GetMapping("/balances")
+    @ApiOperation(value = "Gets all the saved members.", notes = "Returns a list of members")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Members returned", response = GeneralResponse.class),
+            @ApiResponse(code = 500, message = "Internal server error", response = ErrorResponse.class)
+    })
+    public ResponseEntity getMemberBalance(
+            @ApiParam(
+            value = "Request body for userAccount.",
+            required = true)
+            @RequestParam Integer memberID){
+        try {
+            List<AccountBalanceDTO> accountBalance = fetchMemberFlow.getMemberBalances(memberID);
+            return new ResponseEntity<List<AccountBalanceDTO>>(accountBalance, HttpStatus.OK);
+        }catch (DatabaseReadException e)
+        {
+            ErrorResponse response = new ErrorResponse(new ErrorMessage(e.getMessage()));
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

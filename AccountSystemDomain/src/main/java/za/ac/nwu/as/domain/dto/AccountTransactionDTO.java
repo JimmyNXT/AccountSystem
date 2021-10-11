@@ -1,14 +1,10 @@
 package za.ac.nwu.as.domain.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import za.ac.nwu.as.domain.persistence.AccountTransaction;
-import za.ac.nwu.as.domain.persistence.AccountType;
-import za.ac.nwu.as.domain.persistence.Member;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Objects;
 
 @ApiModel(value = "AccountTransaction", description = "A Data Transfer Object that represents the Account transaction.")
@@ -53,7 +49,7 @@ public class AccountTransactionDTO implements Serializable {
             value = "Transaction AccountType",
             name = "Account Type",
             dataType = "java.lang.String",
-            example = "1",
+            example = "MILES",
             required = true
     )
     public String getAccountTypeMnemonic() {

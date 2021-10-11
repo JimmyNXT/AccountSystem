@@ -11,27 +11,27 @@ public class AccountBalanceDTO implements Serializable {
 
     private static final long serialVersionUID = -7970875337531858827L;
 
-    private AccountTypeDTO accountType;
+    private Integer accountTypeID;
     private Long balance;
 
     public AccountBalanceDTO() {
     }
 
-    public AccountBalanceDTO(AccountTypeDTO accountType, Long balance) {
-        this.accountType = accountType;
+    public AccountBalanceDTO(Integer accountTypeID, Long balance) {
+        this.accountTypeID = accountTypeID;
         this.balance = balance;
     }
 
     @ApiModelProperty(
             position = 1,
-            value = "AccountType",
-            name = "Account Type",
-            dataType = "za.ac.nwu.as.domain.dto.AccountTypeDTO",
-//            example = "Miles",
+            value = "AccountTypeID",
+            name = "Account Type ID",
+            dataType = "java.lang.String",
+            example = "1",
             required = true
     )
-    public AccountTypeDTO getAccountType() {
-        return accountType;
+    public Integer getAccountTypeID() {
+        return accountTypeID;
     }
 
     @ApiModelProperty(
@@ -46,8 +46,8 @@ public class AccountBalanceDTO implements Serializable {
         return balance;
     }
 
-    public void setAccountType(AccountTypeDTO accountType) {
-        this.accountType = accountType;
+    public void setAccountTypeID(Integer accountTypeID) {
+        this.accountTypeID = accountTypeID;
     }
 
     public void setBalance(Long balance) {
@@ -64,18 +64,18 @@ public class AccountBalanceDTO implements Serializable {
         if (this == o) return true;
         if (!(o instanceof AccountBalanceDTO)) return false;
         AccountBalanceDTO that = (AccountBalanceDTO) o;
-        return Objects.equals(accountType, that.accountType) && Objects.equals(balance, that.balance);
+        return Objects.equals(accountTypeID, that.accountTypeID) && Objects.equals(balance, that.balance);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountType, balance);
+        return Objects.hash(accountTypeID, balance);
     }
 
     @Override
     public String toString() {
         return "AccountBalanceDTO{" +
-                "accountType=" + accountType +
+                "accountTypeID=" + accountTypeID +
                 ", balance=" + balance +
                 '}';
     }
