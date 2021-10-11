@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import za.ac.nwu.as.domain.persistence.AccountTransaction;
 import za.ac.nwu.as.domain.persistence.Member;
-import za.ac.nwu.as.domain.persistence.MemberGoal;
 
 import java.io.Serializable;
 import java.util.*;
@@ -18,9 +17,6 @@ public class MemberDTO implements Serializable {
     private Integer ID = null;
     private String firstName;
     private String lastName;
-    private Set<MemberGoalDTO> memberGoals;
-    private List<AccountBalanceDTO> accountBalances;
-
 
     public MemberDTO() {
     }
@@ -28,39 +24,12 @@ public class MemberDTO implements Serializable {
     public MemberDTO(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.memberGoals = new HashSet<>();
-        this.accountBalances = new ArrayList<>();
     }
 
     public MemberDTO(Member member) {
         this.ID = member.getID();
         this.firstName = member.getFirstName();
         this.lastName = member.getLastName();
-        this.memberGoals = new HashSet<>();
-        this.accountBalances = new ArrayList<>();
-
-        for(MemberGoal memberGoal : member.getMemberGoals()){
-            this.memberGoals.add(new MemberGoalDTO(memberGoal));
-        }
-
-        for(AccountTransaction accountTransaction : member.getAccountTransactions()){
-            boolean hasType = false;
-
-            for (int i = 0; i < accountBalances.size(); i++) {
-                AccountBalanceDTO tempAccountBalanceDTO = accountBalances.get(i);
-                if(tempAccountBalanceDTO.getAccountType().equals(accountTransaction.getAccountType()))
-                {
-                    hasType = true;
-                    tempAccountBalanceDTO.addToBalance(accountTransaction.getAmount());
-                    accountBalances.set(i, tempAccountBalanceDTO);
-                }
-            }
-
-            if(!hasType)
-            {
-                this.accountBalances.add(new AccountBalanceDTO(new AccountTypeDTO(accountTransaction.getAccountType()), accountTransaction.getAmount()));
-            }
-        }
     }
 
     @ApiModelProperty(
@@ -69,7 +38,7 @@ public class MemberDTO implements Serializable {
             name = "ID",
             dataType = "java.lang.Integer",
             example = "1",
-            required = false
+            required = true
     )
     public Integer getID() {
         return ID;
@@ -99,22 +68,14 @@ public class MemberDTO implements Serializable {
         return lastName;
     }
 
-    @ApiModelProperty(
-            position = 4,
-            value = "Member's goals",
-            name = "Goals",
-            dataType = "za.ac.nwu.as.domain.dto.MemberGoalDTO",
-//            example = "Miles",
-            required = false
-    )
-    public Set<MemberGoalDTO> getMemberGoals() {
-        return memberGoals;
-    }
-
     @JsonIgnore
     public Member getMember()
     {
         return new Member(this.firstName, this.lastName);
+    }
+
+    public void setID(Integer ID) {
+        this.ID = ID;
     }
 
     public void setFirstName(String firstName) {
@@ -125,21 +86,17 @@ public class MemberDTO implements Serializable {
         this.lastName = lastName;
     }
 
-    public void setMemberGoals(Set<MemberGoalDTO> memberGoals) {
-        this.memberGoals = memberGoals;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof MemberDTO)) return false;
         MemberDTO memberDTO = (MemberDTO) o;
-        return Objects.equals(ID, memberDTO.ID) && Objects.equals(firstName, memberDTO.firstName) && Objects.equals(lastName, memberDTO.lastName) && Objects.equals(memberGoals, memberDTO.memberGoals) && Objects.equals(accountBalances, memberDTO.accountBalances);
+        return Objects.equals(ID, memberDTO.ID) && Objects.equals(firstName, memberDTO.firstName) && Objects.equals(lastName, memberDTO.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID, firstName, lastName, memberGoals, accountBalances);
+        return Objects.hash(ID, firstName, lastName);
     }
 
     @Override
@@ -148,8 +105,6 @@ public class MemberDTO implements Serializable {
                 "ID=" + ID +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", memberGoals=" + memberGoals +
-                ", accountBalances=" + accountBalances +
                 '}';
     }
 }

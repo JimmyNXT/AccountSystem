@@ -14,17 +14,15 @@ public class Member implements Serializable {
     private Integer ID;
     private String firstName;
     private String lastName;
-    private Set<MemberGoal> memberGoals;
     private Set<AccountTransaction>  accountTransactions;
 
     public Member() {
     }
 
-    public Member(Integer ID, String firstName, String lastName, Set<MemberGoal> memberGoals, Set<AccountTransaction> accountTransactions) {
+    public Member(Integer ID, String firstName, String lastName, Set<AccountTransaction> accountTransactions) {
         this.ID = ID;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.memberGoals = memberGoals;
         this.accountTransactions = accountTransactions;
     }
 
@@ -32,8 +30,6 @@ public class Member implements Serializable {
     public Member(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.memberGoals = memberGoals;
-        this.accountTransactions = accountTransactions;
     }
 
     @Id
@@ -53,11 +49,6 @@ public class Member implements Serializable {
         return lastName;
     }
 
-    @OneToMany(targetEntity = MemberGoal.class, fetch = FetchType.LAZY, mappedBy = "member", orphanRemoval = true, cascade = CascadeType.PERSIST)
-    public Set<MemberGoal> getMemberGoals() {
-        return memberGoals;
-    }
-
     @OneToMany(targetEntity = AccountTransaction.class, fetch = FetchType.LAZY, mappedBy = "member", orphanRemoval = true, cascade = CascadeType.PERSIST)
     public Set<AccountTransaction> getAccountTransactions() {
         return accountTransactions;
@@ -75,10 +66,6 @@ public class Member implements Serializable {
         this.lastName = lastName;
     }
 
-    public void setMemberGoals(Set<MemberGoal> memberGoals) {
-        this.memberGoals = memberGoals;
-    }
-
     public void setAccountTransactions(Set<AccountTransaction> accountTransactions) {
         this.accountTransactions = accountTransactions;
     }
@@ -88,12 +75,12 @@ public class Member implements Serializable {
         if (this == o) return true;
         if (!(o instanceof Member)) return false;
         Member member = (Member) o;
-        return Objects.equals(ID, member.ID) && Objects.equals(firstName, member.firstName) && Objects.equals(lastName, member.lastName) && Objects.equals(memberGoals, member.memberGoals) && Objects.equals(accountTransactions, member.accountTransactions);
+        return Objects.equals(ID, member.ID) && Objects.equals(firstName, member.firstName) && Objects.equals(lastName, member.lastName) && Objects.equals(accountTransactions, member.accountTransactions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID, firstName, lastName, memberGoals, accountTransactions);
+        return Objects.hash(ID, firstName, lastName, accountTransactions);
     }
 
     @Override
@@ -102,7 +89,6 @@ public class Member implements Serializable {
                 "ID=" + ID +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", memberGoals=" + memberGoals +
                 ", accountTransactions=" + accountTransactions +
                 '}';
     }

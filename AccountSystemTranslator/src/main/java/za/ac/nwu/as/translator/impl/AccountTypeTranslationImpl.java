@@ -17,22 +17,15 @@ import java.time.LocalDate;
 @Component
 public class AccountTypeTranslationImpl implements AccountTypeTranslator {
 
+    private final AccountTypeRepository accountTypeRepository;
+
     @Autowired
-    private AccountTypeRepository accountTypeRepository;
-
-    public AccountTypeTranslationImpl() {
-    }
-
     public AccountTypeTranslationImpl(AccountTypeRepository accountTypeRepository) {
         this.accountTypeRepository = accountTypeRepository;
     }
 
     public AccountTypeRepository getAccountTypeRepository() {
         return accountTypeRepository;
-    }
-
-    public void setAccountTypeRepository(AccountTypeRepository accountTypeRepository) {
-        this.accountTypeRepository = accountTypeRepository;
     }
 
     @Override
@@ -51,7 +44,9 @@ public class AccountTypeTranslationImpl implements AccountTypeTranslator {
     @Override
     public AccountTypeDTO create(AccountTypeDTO accountTypeDTO){
         try {
-            AccountType accountType = accountTypeRepository.save(accountTypeDTO.getAccountType());
+            AccountType tempAccountType = accountTypeDTO.getAccountType();
+            tempAccountType.setCreationDate(LocalDate.now());
+            AccountType accountType = accountTypeRepository.save(tempAccountType);
             return new AccountTypeDTO(accountType);
         }catch (Exception e){
             throw new DatabaseWriteException("Unable to save to the DB");

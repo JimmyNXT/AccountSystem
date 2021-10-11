@@ -24,6 +24,7 @@ public class CreateMemberFlowImpl implements CreateMemberFlow {
 
     @Override
     public MemberDTO create(MemberDTO member) {
+
         return memberTranslator.create(member);
     }
 }

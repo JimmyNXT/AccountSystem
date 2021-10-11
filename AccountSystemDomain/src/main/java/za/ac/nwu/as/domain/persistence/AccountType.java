@@ -17,7 +17,6 @@ public class AccountType  implements Serializable {
     private String name;
     private LocalDate creationDate;
     private Set<AccountTransaction> accountTransactions;
-    private Set<MemberGoal> memberGoals;
 
     public AccountType() {
     }
@@ -33,6 +32,11 @@ public class AccountType  implements Serializable {
         this.mnemonic = mnemonic;
         this.name = name;
         this.creationDate = creationDate;
+    }
+
+    public AccountType(String mnemonic, String name) {
+        this.mnemonic = mnemonic;
+        this.name = name;
     }
 
     @Id
@@ -62,10 +66,6 @@ public class AccountType  implements Serializable {
         return accountTransactions;
     }
 
-    @OneToMany(targetEntity = MemberGoal.class, fetch = FetchType.LAZY, mappedBy = "accountType", orphanRemoval = true, cascade = CascadeType.PERSIST)
-    public Set<MemberGoal> getMemberGoals() {
-        return memberGoals;
-    }
 
     public void setId(Integer id) {
         this.id = id;
@@ -87,21 +87,17 @@ public class AccountType  implements Serializable {
         this.accountTransactions = accountTransactions;
     }
 
-    public void setMemberGoals(Set<MemberGoal> memberGoals) {
-        this.memberGoals = memberGoals;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AccountType)) return false;
         AccountType that = (AccountType) o;
-        return id == that.id && Objects.equals(mnemonic, that.mnemonic) && Objects.equals(name, that.name) && Objects.equals(creationDate, that.creationDate);
+        return Objects.equals(id, that.id) && Objects.equals(mnemonic, that.mnemonic) && Objects.equals(name, that.name) && Objects.equals(creationDate, that.creationDate) && Objects.equals(accountTransactions, that.accountTransactions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, mnemonic, name, creationDate);
+        return Objects.hash(id, mnemonic, name, creationDate, accountTransactions);
     }
 
     @Override
@@ -111,6 +107,7 @@ public class AccountType  implements Serializable {
                 ", mnemonic='" + mnemonic + '\'' +
                 ", name='" + name + '\'' +
                 ", creationDate=" + creationDate +
+                ", accountTransactions=" + accountTransactions +
                 '}';
     }
 }
