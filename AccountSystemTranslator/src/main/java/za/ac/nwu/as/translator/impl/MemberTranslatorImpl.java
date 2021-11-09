@@ -73,13 +73,17 @@ public class MemberTranslatorImpl implements MemberTranslator {
                     AccountBalanceDTO tempAccountBalanceDTO = accountBalances.get(i);
                     if(tempAccountBalanceDTO.getAccountTypeID() == accountTransaction.getAccountType().getId()) {
                         hasBalance = true;
-                        tempAccountBalanceDTO.setBalance(tempAccountBalanceDTO.getBalance() + accountTransaction.getAmount());
+                        tempAccountBalanceDTO.setBalance(
+                                tempAccountBalanceDTO.getBalance() + accountTransaction.getAmount());
                         accountBalances.set(i, tempAccountBalanceDTO);
                     }
                 }
                 if(!hasBalance)
                 {
-                    accountBalances.add(new AccountBalanceDTO(accountTransaction.getAccountType().getId(), accountTransaction.getAmount()));
+                    accountBalances.add(
+                            new AccountBalanceDTO(accountTransaction.getAccountType().getId(),
+                            accountTransaction.getAmount())
+                    );
                 }
             }
             return accountBalances;
